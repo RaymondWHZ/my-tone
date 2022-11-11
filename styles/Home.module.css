@@ -1,0 +1,11 @@
+.container {
+  padding: 0 2rem;
+  background: linear-gradient(180deg, #FFFA82 0%, rgba(111, 226, 150, 0.75439) 69.27%, rgba(29, 214, 255, 0.56) 100%);
+  height: 100vh;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.37);
+  border-radius: 5px;
+  padding: 16px;
+}
