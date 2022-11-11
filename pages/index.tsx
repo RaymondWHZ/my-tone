@@ -1,13 +1,16 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import {Box, Button, Center, Flex, Heading, Input, Text} from "@chakra-ui/react";
-import React, {ComponentProps} from "react";
+import React, {ComponentProps, useState} from "react";
+import {useRouter} from "next/router";
 
 const Card: React.FC<ComponentProps<typeof Box>> = (props) => {
   return <Box className={styles.card} {...props}/>
 }
 
 export default function Home() {
+  const router = useRouter();
+  const [ url, setUrl ] = useState("");
   return (
     <Box className={styles.container}>
       <Head>
@@ -32,8 +35,8 @@ export default function Home() {
           </Card>
           <Card w="100%">
             <Text fontWeight="bold" mb="10px" color="white">2. Paste your playlist link below</Text>
-            <Input placeholder="Paste link here" mb="10px" bg="white"/>
-            <Button w="100%" colorScheme="teal" onClick={() => {}}>See my tone!</Button>
+            <Input placeholder="Paste link here" mb="10px" bg="white" value={url} onChange={e => setUrl(e.target.value)}/>
+            <Button w="100%" colorScheme="teal" onClick={() => { router.push("/gradient?url=" + url) }}>See my tone!</Button>
           </Card>
         </Box>
       </Center>
