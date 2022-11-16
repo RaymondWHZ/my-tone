@@ -16,7 +16,7 @@ const calculateMeanQuartile = (arr) => {
           return sorted[base];
       }
   };
-  const q25 = arr => quantile(arr, .25);
+  const q25 = (arr) => quantile(arr, .25);
   const q75 = arr => quantile(arr, .75);
   
   l.push(mean(arr), q25(arr), q75(arr));
@@ -25,13 +25,13 @@ const calculateMeanQuartile = (arr) => {
 
 const getFeaturesInfo = (playlist) => {
 
-    const SpotifyWebApi = require('../../node_modules/spotify-web-api-node');
+    const SpotifyWebApi = require('../node_modules/spotify-web-api-node');
 
     const spotifyApi = new SpotifyWebApi({
         accessToken: 'BQDpYxhsRFYTkZznkdujDpXmArfBosjc9F9noiBCwDxJUkODcUJr5XdaMxYvQEkOnxLQ9JT9iglvC3OEgD_LqbE02RsTJxPd3-PZGlTeQP4THvAJAbKSVnnEWKu4KdtAcWHs1kRD0vAPXT0PpXyfDG4XV_TEKmOshnTY7F6BzLR1'
     });
 
-    var tracks=[];
+    var tracks = [];
     var features=['danceability','energy','key','loudness','speechiness','acousticness','instrumentalness',
                     'liveness','valence','tempo','time_signature','mode'];
     var featureValues = {};

@@ -1,5 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { getFeaturesInfo } from '../../utils/trackFeatures';
 
 type Data = {
   data: any
@@ -15,5 +16,6 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   await sleep(2000)
+  var featuresInfo = getFeaturesInfo('71uF3xQj2v6DTZyCRIvZHv');
   res.status(200).json({ data: { color: "red" } })
 }
