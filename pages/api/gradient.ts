@@ -14,7 +14,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  // everything here runs in the server side
   await sleep(2000)
   res.status(200).json({ data: { color: "red" } })
 }
