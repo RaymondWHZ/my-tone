@@ -15,7 +15,6 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  await sleep(2000)
   var featuresInfo = await getFeaturesInfo('71uF3xQj2v6DTZyCRIvZHv');
   console.log(featuresInfo)
   // red
@@ -52,8 +51,20 @@ export default async function handler(
   console.log('blue', c1_blue, c2_blue, c_blue)
 
   res.status(200).json({data: {
-    red: {c1: c1_red, c2: c2_red, c: c_red},
-    green: {c1: c1_green, c2: c2_green, c: c_green},
-    blue: {c1: c1_blue, c2: c2_blue, c: c_blue}
+    color_points: [
+      [c1_red, c1_green, c1_blue],
+      [c1_red + (c2_red - c1_red) * Math.pow(0.1, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.1, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.1, c_green)],
+      [c1_red + (c2_red - c1_red) * Math.pow(0.2, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.2, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.2, c_green)],
+      [c1_red + (c2_red - c1_red) * Math.pow(0.3, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.3, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.3, c_green)],
+      [c1_red + (c2_red - c1_red) * Math.pow(0.4, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.4, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.4, c_green)],
+      [c1_red + (c2_red - c1_red) * Math.pow(0.5, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.5, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.5, c_green)],
+      [c1_red + (c2_red - c1_red) * Math.pow(0.6, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.6, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.6, c_green)],
+      [c1_red + (c2_red - c1_red) * Math.pow(0.7, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.7, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.7, c_green)],
+      [c1_red + (c2_red - c1_red) * Math.pow(0.8, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.8, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.8, c_green)],
+      [c1_red + (c2_red - c1_red) * Math.pow(0.9, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.9, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.9, c_green)],
+      [c2_red, c2_green, c2_blue]
+    ],
+    c: [c_red, c_green, c_blue],
+    description: "Sample"
   }})
 }

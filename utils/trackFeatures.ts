@@ -23,7 +23,7 @@ const calculateMeanQuartile = (arr) => {
   return l;
 }
 
-export const getFeaturesInfo = async (playlist) => {
+export const getFeaturesInfo = async (playlist: string): Promise<any> => {
   const SpotifyWebApi = require('../node_modules/spotify-web-api-node');
 
   const spotifyApi = new SpotifyWebApi({
