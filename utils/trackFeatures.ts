@@ -1,11 +1,11 @@
-const calculateMeanQuartile = (arr) => {
+const calculateMeanQuartile = (arr: number[]) => {
   var l = [];
 
-  const asc = arr => arr.sort((a, b) => a - b);
-  const sum = arr => arr.reduce((a, b) => a + b, 0);
-  const mean = arr => sum(arr) / arr.length;
+  const asc = (arr: number[]) => arr.sort((a, b) => a - b);
+  const sum = (arr: number[]) => arr.reduce((a, b) => a + b, 0);
+  const mean = (arr: number[]) => sum(arr) / arr.length;
 
-  const quantile = (arr, q) => {
+  const quantile = (arr: number[], q: number) => {
       const sorted = asc(arr);
       const pos = (sorted.length - 1) * q;
       const base = Math.floor(pos);
@@ -16,10 +16,19 @@ const calculateMeanQuartile = (arr) => {
           return sorted[base];
       }
   };
-  const q25 = (arr) => quantile(arr, .25);
-  const q75 = arr => quantile(arr, .75);
+  const q25 = (arr: number[]) => quantile(arr, .25);
+  const q75 = (arr: number[]) => quantile(arr, .75);
 
   l.push(mean(arr), q25(arr), q75(arr));
+  return l;
+}
+
+const normalize = (arr: number[], min: number, max: number) => {
+  var l = [];
+  l.push((arr[0] - min) / (max - min));
+  l.push((arr[1] - min) / (max - min));
+  l.push((arr[2] - min) / (max - min));
+
   return l;
 }
 
@@ -27,8 +36,15 @@ export const getFeaturesInfo = async (playlist: string): Promise<any> => {
   const SpotifyWebApi = require('../node_modules/spotify-web-api-node');
 
   const spotifyApi = new SpotifyWebApi({
-      accessToken: 'BQDzv9Jfd8o2qeWs6gkjf2WhcYldLYqsQXNgfHxYiyQsjhhJaEZq_ScNJu1fVXnhJOUOvPj6QknnGy5isRrEGenAp0NSJFazOwXDlUAmLsP7Bo2RGCjuTe_jiaKLy3jMDXXH2stA94GPJgl6xnDuhmPLCvWj2psVo2rXMFbqakLM'
+    clientId : '4a13ead1dc754e9ea3f61616b009cc8a',
+    clientSecret: 'c199f4ce1f3440fba48363e073d628c6',
+    refreshToken: 'AQATAfzsStaw869U-Fs-bEXd16zNpKFSiX0NbcJyg0JZj9RE0sqMW5wpGilWdG57HL95tk5BCyZPGLlGDHIQc2idLyaHqESZC-_HvRkW_UVP_9mJH_XldcwBe-b-c60NH4k'
   });
+
+  const refreshTokenResponse = await spotifyApi.refreshAccessToken()
+  console.log('The access token has been refreshed ::: ' + refreshTokenResponse.body['access_token']);
+  spotifyApi.setAccessToken(refreshTokenResponse.body['access_token']);
+
 
   var tracks: string[] = [];
   var features=['danceability','energy','key','loudness','speechiness','acousticness','instrumentalness',
@@ -65,6 +81,13 @@ export const getFeaturesInfo = async (playlist: string): Promise<any> => {
 
   for (const [key, value] of Object.entries(featureValues)) {
     featuresInfo[key] = calculateMeanQuartile(featureValues[key]);
+    if(key == 'key') {
+      featuresInfo[key] = normalize(featuresInfo[key], -1, 11);
+    } else if(key=='loudness') {
+      featuresInfo[key] = normalize(featuresInfo[key], -60, 0);
+    } else if(key=='time_signature') {
+      featuresInfo[key] = normalize(featuresInfo[key], 3, 7);
+    }
   }
 
   // console.log('featuresInfo ::: ', featuresInfo);
