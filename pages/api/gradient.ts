@@ -39,4 +39,14 @@ export default async function handler(
   var c_green = (acousticness[2] - acousticness[0] + instrumentalness[2] - instrumentalness[0] + speechiness[2] - speechiness[0] + danceability[2] - danceability[0])
                 / (acousticness[0] - acousticness[1] + instrumentalness[0] - instrumentalness[1] + speechiness[0] - speechiness[1] + danceability[0] - danceability[1])
   res.status(200).json({data: {color: 'green', c1: c1_green, c2: c2_green, c: c_green}})
+
+  // blue
+  var mode = featuresInfo['mode']
+  var tempo = featuresInfo['tempo']
+  var time_signature = featuresInfo['time_signature']
+  var key = featuresInfo['key']
+  var c1_blue = 256 * (0.4 * mode[2] + 0.4 * tempo[2] + 0.1 * key[2] + 0.1 * time_signature[2])
+  var c2_blue = 256 * (0.4 * mode[1] + 0.4 * tempo[1] + 0.1 * key[1] + 0.1 * time_signature[1])
+  var c_blue = (tempo[2] - tempo[0]) / (tempo[0] - tempo[1])
+  res .status(200).json({data: {color: 'blue', c1: c1_blue, c2: c2_blue, c: c1_blue}})
 }
