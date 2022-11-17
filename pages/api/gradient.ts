@@ -15,6 +15,7 @@ export default async function handler(
   res: NextApiResponse<Data>
 ) {
   // everything here runs in the server side
+  const playlist = req.query.playlist
   await sleep(2000)
-  res.status(200).json({ data: { color: "red" } })
+  res.status(200).json({ data: { color: playlist } })
 }

@@ -5,11 +5,11 @@ import {useRouter} from "next/router";
 
 export default function Gradient() {
   const router = useRouter()
-  const { url } = router.query
+  const { playlist } = router.query
 
   const [response, setResponse] = useState<any>(undefined);
   useEffect(() => {  // executes once on page load
-    fetch("/api/gradient?url=" + url)
+    fetch("/api/gradient?playlist=" + playlist)
       .then(async res => setResponse(await res.json()))
   }, [])
 
