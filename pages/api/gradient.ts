@@ -28,4 +28,15 @@ export default async function handler(
   var c_red = (energy[2] - energy[0] + valence[2] - valence[0] + loudness[2] - loudness[0] + liveness[2] - liveness[0])
               / (energy[0] - energy[1] + valence[0] - valence[1] + loudness[0] - loudness[1] + liveness[0] - liveness[1])
   res.status(200).json({data: {color: 'red', c1: c1_red, c2: c2_red, c: c_red}})
+
+  // green
+  var acousticness = featuresInfo['accousticness']
+  var instrumentalness = featuresInfo['instrumentalness']
+  var speechiness = featuresInfo['speechiness']
+  var danceability = featuresInfo['danceability']
+  var c1_green = 256 * (0.4 * danceability[2] + 0.2 * speechiness[2] + 0.2 * instrumentalness[2] + 0.2 * acousticness[2])
+  var c2_green = 256 * (0.4 * danceability[1] + 0.2 * speechiness[1] + 0.2 * instrumentalness[1] + 0.2 * acousticness[1])
+  var c_green = (acousticness[2] - acousticness[0] + instrumentalness[2] - instrumentalness[0] + speechiness[2] - speechiness[0] + danceability[2] - danceability[0])
+                / (acousticness[0] - acousticness[1] + instrumentalness[0] - instrumentalness[1] + speechiness[0] - speechiness[1] + danceability[0] - danceability[1])
+  res.status(200).json({data: {color: 'green', c1: c1_green, c2: c2_green, c: c_green}})
 }
