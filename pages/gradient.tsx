@@ -1,5 +1,6 @@
-import {Box, Flex, Text, Button} from "@chakra-ui/react";
+import {Box, Flex, Text, Button, Spacer, Image} from "@chakra-ui/react";
 import styles from "../styles/Home.module.css";
+
 import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
 
@@ -112,24 +113,83 @@ export default function Gradient() {
       </Box>
     )
   }
-  return (
-    <Box className={styles.container}>
-      {/* Gradient {response.data.color} */}
-      {
-      Object.keys(descriptions).map( c => {
-        // {descriptions[c].description}
-        return (
-        <Card w="100%" mb="20px" background="rgba(255, 255, 255, 1.0)">
-          <Text fontWeight="bold" mb="10px" color={c}>{c.toUpperCase() + ": " + descriptions[c].quantifier}</Text>
-          <Text color="black" mb="20px">{descriptions[c].description}</Text>
-          <Flex flexDirection="row" justifyContent='center'>
-            <Button size="sm" mb="10px" bg="black" color="white">See Similar</Button>
-          </Flex>
-          
-        </Card>)
-      })
-      }
 
-    </Box>
+  
+  return (
+    <>
+      <Box className={styles.gradient}>
+      </Box>
+      <Box className={styles.description_container}>
+        <Flex h="100vh" flexDirection="column">
+          <Flex flexDirection="row" mt="20px">
+            <Button colorScheme='white' variant='ghost'>
+              <Image
+                boxSize='2.5em'
+                objectFit='cover'
+                src='/down_chevron_icon.svg'
+                transform='rotate(270deg)'
+              />
+            </Button>
+            <Spacer/>
+          </Flex>
+          <Spacer/>
+          <Flex flexDirection="row" justifyContent="center" mb="20px" >
+            <Button colorScheme='white' variant='ghost'>
+              <Image
+                boxSize='2.5em'
+                objectFit='cover'
+                src='/share_icon.svg'
+              />
+            </Button>
+            <Spacer/>
+            <Button colorScheme='white' variant='ghost'>
+              <Image
+                boxSize='2.5em'
+                objectFit='cover'
+                src='/down_chevron_icon.svg'
+              />
+            </Button>
+            <Spacer/>
+            <Box boxSize='2.5em' />
+          </Flex>
+        </Flex>
+        <Box background="rgba(255, 255, 255, 0.0)">
+          {
+          
+          Object.keys(descriptions).map( c => {
+            // {descriptions[c].description}
+            return (
+            <Card w="100%" mb="20px" background="rgba(255, 255, 255, 1.0)">
+              <Text fontWeight="bold" mb="10px" color={c}>{c.toUpperCase() + ": " + descriptions[c].quantifier}</Text>
+              <Text color="black" mb="20px">{descriptions[c].description}</Text>
+              <Flex flexDirection="row" justifyContent='center'>
+                <Button size="sm" mb="10px" bg="black" color="white">See Similar</Button>
+              </Flex>
+            </Card>)
+          })
+          }
+        </Box>
+        <Flex flexDirection="row" justifyContent="center" mb="20px" >
+          <Button colorScheme='white' variant='ghost'>
+            <Image
+              boxSize='2.5em'
+              objectFit='cover'
+              src='/share_icon.svg'
+            />
+          </Button>
+          <Spacer/>
+          <Button colorScheme='white' variant='ghost'>
+            <Image
+              width='2.5em'
+              height='2.5em'
+              objectFit='cover'
+              src='/refresh_iconsvg.svg'
+            />
+          </Button>
+          <Spacer/>
+          <Box boxSize='2.5em' />
+        </Flex>
+      </Box>
+    </>
   )
 }
