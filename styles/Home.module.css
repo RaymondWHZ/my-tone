@@ -1,6 +1,5 @@
 .container {
-  padding: 0 2rem;
-  background: linear-gradient(180deg, #FFFA82 0%, rgba(111, 226, 150, 0.75439) 69.27%, rgba(29, 214, 255, 0.56) 100%);
+  background: linear-gradient(180deg, #FFFA82 0%, rgba(111, 226, 150, 0.75439) 69.27%, rgba(29, 214, 255, 0.56) 100%), black;
   height: 100vh;
 }
 
@@ -8,4 +7,13 @@
   background: rgba(255, 255, 255, 0.37);
   border-radius: 5px;
   padding: 16px;
+}
+
+/*noinspection CssInvalidPropertyValue*/
+.tone {
+  background: linear-gradient(104.29deg, #6271FF 55.32%, #FF7B73 88.41%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 }
