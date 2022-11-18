@@ -96,7 +96,7 @@ const getSampleDescriptions = () => {
   return generateDescriptions({red: 225, green: 120, blue: 40}, {red: 80, green: 100, blue: 30});
 }
 
-const useGradientAndDescription = (playlist: string) => {
+const useGradientAndDescription = (playlist: string | undefined) => {
   const [response, setResponse] = useState<any>(undefined);
   useEffect(() => {  // executes once on page load
     if (playlist) {
@@ -132,9 +132,8 @@ const GradientBackground: React.FC<{ colorPoints: number[][] }> = ({ colorPoints
 
 export default function Gradient() {
   const router = useRouter()
-  const { playlist } = router.query
-  console.log(router.query)
-  const { loading, error, colorPoints, descriptions } = useGradientAndDescription(playlist as string)
+  const playlist = router.query.playlist as string | undefined
+  const { loading, error, colorPoints, descriptions } = useGradientAndDescription(playlist)
   const [similarSongs, setSimilarSongs] = useState<string | undefined>(undefined);
 
   if (loading) {  // loading
