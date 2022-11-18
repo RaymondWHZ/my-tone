@@ -6,6 +6,7 @@ import {Descriptions, DisplayDescription} from "../components/descriptions";
 import {SimilarSongs} from "../components/similar-songs";
 import {Loading} from "../components/loading";
 import {GradientCanvas} from "../components/gradientCanvas"
+import {Error} from "../components/error";
 
 interface Color {
   [key: string]: number
@@ -100,7 +101,7 @@ const getSampleDescriptions = () => {
 const useGradientAndDescription = (playlist: string | undefined) => {
   const [response, setResponse] = useState<any>(undefined);
   useEffect(() => {  // executes once on page load
-    if (playlist) {
+    if (playlist !== undefined) {
       fetch("/api/gradient?playlist=" + playlist)
         .then(async res => {
           setResponse(await res.json())
@@ -135,9 +136,7 @@ export default function Gradient() {
 
   if (error) {  // error
     return (
-      <Box className={styles.container}>
-        Error: {error}
-      </Box>
+      <Error/>
     )
   }
 
