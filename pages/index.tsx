@@ -5,14 +5,17 @@ import React, {useMemo, useState} from "react";
 import {useRouter} from "next/router";
 import {AlphaCard} from "../components/cards";
 
-const SPOTIFY_PLAYLIST_ID_LENGTH = 22
-
 export default function Home() {
   const router = useRouter();
   const [ url, setUrl ] = useState("");
   const playlist = useMemo(() => {
     const start = url.lastIndexOf("/") + 1
-    return url.substring(start, start + SPOTIFY_PLAYLIST_ID_LENGTH)
+    const end = url.indexOf("?", start)
+    if (end == -1) {
+      return url.substring(start)
+    } else {
+      return url.substring(start, end)
+    }
   }, [url])
   return (
     <Box className={styles.container}>

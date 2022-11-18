@@ -57,7 +57,7 @@ export const Descriptions: React.FC<DescriptionsProps> = ({ descriptions, onClic
         {descriptions &&
           Object.keys(descriptions).map(c => {
             return (
-              <WhiteCard w="100%" mb="20px" background="rgba(255, 255, 255, 1.0)">
+              <WhiteCard key={c} w="100%" mb="20px" background="rgba(255, 255, 255, 1.0)">
                 <Text fontWeight="bold" mb="10px" color={c}>{c.toUpperCase() + ": " + descriptions[c].quantifier}</Text>
                 <Text color="black" mb="20px">{descriptions[c].description}</Text>
                 <Flex flexDirection="row" justifyContent='center'>
