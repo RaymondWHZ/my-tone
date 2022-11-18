@@ -7,17 +7,13 @@ type Data = {
   error?: any  // put error in the response if there is any
 }
 
-function sleep(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
 
-  const playlist = req.query.playlist;
-  var featuresInfo = await getFeaturesInfo(playlist);
+  const playlist = req.query.playlist as string;
+  const featuresInfo = await getFeaturesInfo(playlist);
   console.log(featuresInfo)
   // red
   const energy = featuresInfo['energy'];

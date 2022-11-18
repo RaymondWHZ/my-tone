@@ -1,5 +1,7 @@
+import SpotifyWebApi from "spotify-web-api-node";
+
 const calculateMeanQuartile = (arr: number[]) => {
-  var l = [];
+  const l = [];
 
   const asc = (arr: number[]) => arr.sort((a, b) => a - b);
   const sum = (arr: number[]) => arr.reduce((a, b) => a + b, 0);
@@ -24,7 +26,7 @@ const calculateMeanQuartile = (arr: number[]) => {
 }
 
 const normalize = (arr: number[], min: number, max: number) => {
-  var l = [];
+  const l = [];
   l.push((arr[0] - min) / (max - min));
   l.push((arr[1] - min) / (max - min));
   l.push((arr[2] - min) / (max - min));
@@ -33,13 +35,11 @@ const normalize = (arr: number[], min: number, max: number) => {
 }
 
 export const getFeaturesInfo = async (playlist: string): Promise<any> => {
-  const SpotifyWebApi = require('../node_modules/spotify-web-api-node');
+  let cId = process.env.SPOTIFY_CLIENT_ID as string;
+  let cSec = process.env.SPOTIFY_CLIENT_SECRET as string;
+  let refTok = process.env.SPOTIFY_REFRESH_TOKEN as string;
 
-  var cId: string = process.env.SPOTIFY_CLIENT_ID;
-  var cSec: string = process.env.SPOTIFY_CLIENT_SECRET;
-  var refTok: string = process.env.SPOTIFY_REFRESH_TOKEN;
-
-  console.log(cId+ ' ***\n' + cSec + '***\n'+ refTok);
+  // console.log(cId+ ' ***\n' + cSec + '***\n'+ refTok);
 
   const spotifyApi = new SpotifyWebApi({
     clientId : cId,
@@ -52,11 +52,11 @@ export const getFeaturesInfo = async (playlist: string): Promise<any> => {
   spotifyApi.setAccessToken(refreshTokenResponse.body['access_token']);
 
 
-  var tracks: string[] = [];
-  var features=['danceability','energy','key','loudness','speechiness','acousticness','instrumentalness',
+  const tracks: string[] = [];
+  const features=['danceability','energy','key','loudness','speechiness','acousticness','instrumentalness',
                   'liveness','valence','tempo','time_signature','mode'];
-  var featureValues: { [key: string]: any } = {};
-  var featuresInfo: { [key: string]: any } = {};
+  const featureValues: { [key: string]: any } = {};
+  const featuresInfo: { [key: string]: any } = {};
 
   const data = await spotifyApi.getPlaylistTracks(playlist, {
       offset: 1,
@@ -64,29 +64,30 @@ export const getFeaturesInfo = async (playlist: string): Promise<any> => {
       fields: 'items'
   })
 
-  var items: any[] = data.body.items;
+  const items = data.body.items;
   //console.log('Items : ', items);
   items.forEach(element => {
     //console.log('TrackId : ', element.track.id);
-    tracks.push(element.track.id);
+    tracks.push(element.track!.id);
   });
   console.log('The playlist contains these tracks', tracks);
 
   const featureData = await spotifyApi.getAudioFeaturesForTracks(tracks)
   //console.log('data : ', data.body);
-  var audioFeatures: any[] =featureData.body.audio_features;
+  const audioFeatures = featureData.body.audio_features;
   audioFeatures.forEach(element => {
-      features.forEach(feature => {
-          //console.log('feature name :',element[feature]);
-          featureValues[feature] = featureValues[feature] || [];
-          featureValues[feature].push(element[feature]);
-      });
+    features.forEach(feature => {
+      //console.log('feature name :',element[feature]);
+      featureValues[feature] = featureValues[feature] || [];
+      // @ts-ignore
+      featureValues[feature].push(element[feature]);
+    });
   });
 
   // console.log('featureValues ::: ', featureValues);
 
   for (const [key, value] of Object.entries(featureValues)) {
-    featuresInfo[key] = calculateMeanQuartile(featureValues[key]);
+    featuresInfo[key] = calculateMeanQuartile(value);
     if(key == 'key') {
       featuresInfo[key] = normalize(featuresInfo[key], -1, 11);
     } else if(key=='loudness') {
@@ -96,7 +97,7 @@ export const getFeaturesInfo = async (playlist: string): Promise<any> => {
     } else if(key=='tempo') {
       featuresInfo[key] = normalize(featuresInfo[key], 1, 200);
 
-      var temp: number[] = [];
+      const temp: number[] = [];
       featuresInfo[key].forEach((val:number, i:number) => {
         if(val<0) temp[i]=0;
         else if(val>1) temp[i]=1;
