@@ -52,7 +52,7 @@ const generateDescriptions = (color1: Color, color2: Color) => {
       uniform: "Songs in your playlist are similar in acousticness, instrumentalness, amount of vocals, and danceability."
     },
     blue: {
-      high: "The songs in your playlist have high tempos, time signatures, and keys.",
+      high: "The songs in your playlist have high tempos, time signatures, and keys. ",
       medium: "Some songs on your playlist have relatively average tempos, time signatures, and keys. ",
       low: "The songs in your playlists have a lower tempo, time signature and key. ",
       varied: "The tempos, time signature, and keys are highly varied between songs in your playlist.",
