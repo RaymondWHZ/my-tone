@@ -1,11 +1,9 @@
-import {Box, Flex, Text, Button, Spacer, Image} from "@chakra-ui/react";
+import {Box} from "@chakra-ui/react";
 import styles from "../styles/Home.module.css";
-import React, {ComponentProps, useEffect, useMemo, useState} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {useRouter} from "next/router";
-
-const Card: React.FC<ComponentProps<typeof Box>> = (props) => {
-  return <Box className={styles.card} {...props}/>
-}
+import {Descriptions, DisplayDescription} from "../components/descriptions";
+import {SimilarSongs} from "../components/similar-songs";
 
 interface Color {
   [key: string]: number
@@ -21,13 +19,6 @@ interface ColorDescription {
 
 interface ColorDescriptionDict {
   [key: string]: ColorDescription
-}
-
-interface DisplayDescription {
-  [key: string]: {
-    quantifier: string
-    description: string
-  }
 }
 
 // Generate descriptions of the generated colors
@@ -129,6 +120,7 @@ export default function Gradient() {
   const router = useRouter()
   const { playlist } = router.query
   const { loading, error, descriptions } = useGradientAndDescription(playlist as string)
+  const [similarSongs, setSimilarSongs] = useState<string | undefined>(undefined);
 
   if (loading) {  // loading
     return (
@@ -150,75 +142,10 @@ export default function Gradient() {
     <>
       <Box className={styles.gradient} />
       <Box className={styles.description_container}>
-        <Flex h="100vh" flexDirection="column">
-          <Flex flexDirection="row" mt="20px">
-            <Button colorScheme='white' variant='ghost'>
-              <Image
-                boxSize='2.5em'
-                objectFit='cover'
-                src='/down_chevron_icon.svg'
-                transform='rotate(270deg)'
-                onClick={() => router.push("/")}
-              />
-            </Button>
-            <Spacer/>
-          </Flex>
-          <Spacer/>
-          <Flex flexDirection="row" justifyContent="center" mb="20px" >
-            <Button colorScheme='white' variant='ghost'>
-              <Image
-                boxSize='2.5em'
-                objectFit='cover'
-                src='/share_icon.svg'
-              />
-            </Button>
-            <Spacer/>
-            <Button colorScheme='white' variant='ghost'>
-              <Image
-                boxSize='2.5em'
-                objectFit='cover'
-                src='/down_chevron_icon.svg'
-              />
-            </Button>
-            <Spacer/>
-            <Box boxSize='2.5em' />
-          </Flex>
-        </Flex>
-        <Box background="rgba(255, 255, 255, 0.0)">
-          {descriptions &&
-            Object.keys(descriptions).map( c => {
-              return (
-              <Card w="100%" mb="20px" background="rgba(255, 255, 255, 1.0)">
-                <Text fontWeight="bold" mb="10px" color={c}>{c.toUpperCase() + ": " + descriptions[c].quantifier}</Text>
-                <Text color="black" mb="20px">{descriptions[c].description}</Text>
-                <Flex flexDirection="row" justifyContent='center'>
-                  <Button size="sm" mb="10px" bg="black" color="white">See Similar</Button>
-                </Flex>
-              </Card>)
-            })
-          }
-        </Box>
-        <Flex flexDirection="row" justifyContent="center" mb="20px" >
-          <Button colorScheme='white' variant='ghost'>
-            <Image
-              boxSize='2.5em'
-              objectFit='cover'
-              src='/share_icon.svg'
-            />
-          </Button>
-          <Spacer/>
-          <Button colorScheme='white' variant='ghost'>
-            <Image
-              width='2.5em'
-              height='2.5em'
-              objectFit='cover'
-              src='/refresh_iconsvg.svg'
-              onClick={() => router.push("/")}
-            />
-          </Button>
-          <Spacer/>
-          <Box boxSize='2.5em' />
-        </Flex>
+        {!similarSongs ?
+          <Descriptions descriptions={descriptions ?? {}} onClickSeeSimilar={setSimilarSongs} /> :
+          <SimilarSongs onClickReturn={() => setSimilarSongs(undefined)}/>
+        }
       </Box>
     </>
   )
