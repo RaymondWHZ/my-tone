@@ -120,22 +120,12 @@ const useGradientAndDescription = (playlist: string | undefined) => {
   }
 }
 
-const GradientBackground: React.FC<{ colorPoints: number[][] }> = ({ colorPoints }) => {
-  const linearColor = `linear-gradient(to bottom, ${colorPoints.map(p => `rgb(${p[0]}, ${p[1]}, ${p[2]})`).join(", ")})`
-  console.log(linearColor)
-  return (
-    <Box
-      className={styles.gradient}
-      style={{background: linearColor}}
-    />
-  )
-}
-
 export default function Gradient() {
   const router = useRouter()
   const playlist = router.query.playlist as string | undefined
   const { loading, error, colorPoints, descriptions } = useGradientAndDescription(playlist)
   const [similarSongs, setSimilarSongs] = useState<string | undefined>(undefined);
+  const [saveCanvas, setSaveCanvas] = useState<boolean>(false);
 
   if (loading) {  // loading
     return (
@@ -154,10 +144,17 @@ export default function Gradient() {
   return (
     <>
       {/* <GradientBackground colorPoints={colorPoints} /> */}
-      <GradientCanvas colorPoints={colorPoints}/>
+      <GradientCanvas colorPoints={colorPoints} saveCanvas={saveCanvas}/>
       <Box className={styles.description_container}>
         {!similarSongs ?
-          <Descriptions descriptions={descriptions ?? {}} onClickSeeSimilar={setSimilarSongs} /> :
+          <Descriptions
+            descriptions={descriptions ?? {}}
+            onClickSeeSimilar={setSimilarSongs}
+            onClickSave={() => {
+              setSaveCanvas(true)
+              setTimeout(() => setSaveCanvas(false), 500)
+            }}
+          /> :
           <SimilarSongs onClickReturn={() => setSimilarSongs(undefined)}/>
         }
       </Box>

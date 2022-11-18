@@ -1,7 +1,12 @@
-import React, { useRef, useEffect, ComponentProps } from 'react'
+import React, { useRef, useEffect } from 'react'
 import styles from "../styles/Home.module.css";
 
-export const GradientCanvas: React.FC<{ colorPoints: number[][] }> = ({ colorPoints }) => {
+interface GradientCanvasProps {
+  colorPoints: number[][]
+  saveCanvas: boolean
+}
+
+export const GradientCanvas: React.FC<GradientCanvasProps> = ({ colorPoints, saveCanvas }) => {
   
   const canvasRef = useRef<any>(null)
   
@@ -24,14 +29,6 @@ export const GradientCanvas: React.FC<{ colorPoints: number[][] }> = ({ colorPoi
     ctx.fillStyle = grd;
     ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
   }
-
-  const save = () => {
-    const canvas = canvasRef.current
-    var link = document.createElement('a');
-    link.download = 'testGradientDownload.png';
-    link.href = canvas.toDataURL('image/png')
-    link.click();
-  }
   
   useEffect(() => {
     const canvas = canvasRef.current
@@ -39,8 +36,21 @@ export const GradientCanvas: React.FC<{ colorPoints: number[][] }> = ({ colorPoi
     
     //Our draw come here
     draw(context)
-    save()
   }, [draw])
+
+  const save = () => {
+    const canvas = canvasRef.current
+    const link = document.createElement('a');
+    link.download = 'Gradient.png';
+    link.href = canvas.toDataURL('image/png')
+    link.click();
+  }
+
+  useEffect(() => {
+    if (saveCanvas) {
+      save()
+    }
+  }, [saveCanvas])
   
   return <canvas ref={canvasRef} className={styles.gradient}/>
 }

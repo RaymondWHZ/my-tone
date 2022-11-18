@@ -24,9 +24,10 @@ export interface DisplayDescription {
 interface DescriptionsProps {
   descriptions: DisplayDescription
   onClickSeeSimilar?: (color: string) => void
+  onClickSave?: () => void
 }
 
-export const Descriptions: React.FC<DescriptionsProps> = ({ descriptions, onClickSeeSimilar }) => {
+export const Descriptions: React.FC<DescriptionsProps> = ({ descriptions, onClickSeeSimilar, onClickSave }) => {
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
@@ -115,7 +116,7 @@ export const Descriptions: React.FC<DescriptionsProps> = ({ descriptions, onClic
           <DrawerBody pt="20px" pb="80px">
             <Flex flexDirection="row">
               <Box bg="black">
-                <Image src="/file_download.svg" />
+                <Image src="/file_download.svg" onClick={onClickSave} />
               </Box>
             </Flex>
           </DrawerBody>
