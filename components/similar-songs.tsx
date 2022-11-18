@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Flex, Image, Spacer} from "@chakra-ui/react";
+import {Button, Flex, Image, Spacer, Box, Text} from "@chakra-ui/react";
 
 interface SimilarSongsProps {
   onClickReturn?: () => void
@@ -20,7 +20,46 @@ export const SimilarSongs: React.FC<SimilarSongsProps> = ({ onClickReturn }) => 
         </Button>
         <Spacer/>
       </Flex>
-      <h2>Related Songs</h2>
+
+      <Flex background="rgba(255, 255, 255, 0.0)" flexDirection='row' mb="20px" mt="40px">
+        <Image
+          boxSize='10em'
+          objectFit='cover'
+          src='/album_art1.jpeg'
+          borderRadius="20px"
+        />
+        <Flex flexDirection="column" alignContent="left" justifyContent="center" ml="20px">
+          <Text fontWeight="bold" mb="10px" color="black">Comfortably Numb</Text>
+          <Text color="black" mb="20px"> artist: Pink Floyd</Text>
+        </Flex>
+      </Flex>
+
+      <Flex background="rgba(255, 255, 255, 0.0)" flexDirection='row' mb="20px">
+        <Image
+          boxSize='10em'
+          objectFit='cover'
+          src='/album_art2.jpeg'
+          borderRadius="20px"
+        />
+        <Flex flexDirection="column" alignContent="left" justifyContent="center" ml="20px">
+          <Text fontWeight="bold" mb="10px" color="black">Come Together</Text>
+          <Text color="black" mb="20px"> artist: The Beatles</Text>
+        </Flex>
+      </Flex>
+
+      <Flex background="rgba(255, 255, 255, 0.0)" flexDirection='row' mb="20px">
+        <Image
+          boxSize='10em'
+          objectFit='cover'
+          src='/album_art3.jpeg'
+          borderRadius="20px"
+        />
+        <Flex flexDirection="column" alignContent="left" justifyContent="center" ml="20px">
+          <Text fontWeight="bold" mb="10px" color="black">Kashmir</Text>
+          <Text color="black" mb="20px"> artist: Led Zeppelin</Text>
+        </Flex>
+      </Flex>
+      
     </>
   )
 }
