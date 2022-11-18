@@ -4,6 +4,7 @@ import React, {useEffect, useMemo, useState} from "react";
 import {useRouter} from "next/router";
 import {Descriptions, DisplayDescription} from "../components/descriptions";
 import {SimilarSongs} from "../components/similar-songs";
+import {Loading} from "../components/loading";
 
 interface Color {
   [key: string]: number
@@ -124,9 +125,7 @@ export default function Gradient() {
 
   if (loading) {  // loading
     return (
-      <Box className={styles.container}>
-        Loading...
-      </Box>
+      <Loading/>
     )
   }
 
