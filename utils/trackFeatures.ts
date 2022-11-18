@@ -93,6 +93,16 @@ export const getFeaturesInfo = async (playlist: string): Promise<any> => {
       featuresInfo[key] = normalize(featuresInfo[key], -60, 0);
     } else if(key=='time_signature') {
       featuresInfo[key] = normalize(featuresInfo[key], 3, 7);
+    } else if(key=='tempo') {
+      featuresInfo[key] = normalize(featuresInfo[key], 1, 200);
+
+      var temp: number[] = [];
+      featuresInfo[key].forEach((val:number, i:number) => {
+        if(val<0) temp[i]=0;
+        else if(val>1) temp[i]=1;
+        else temp[i]=val;
+      });
+      featuresInfo[key]=temp;
     }
   }
 

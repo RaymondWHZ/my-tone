@@ -69,6 +69,4 @@ export default async function handler(
     c: [c_red, c_green, c_blue],
     description: "Sample"
   }})
-  await sleep(2000)
-  res.status(200).json({ data: { color: playlist } })
 }
