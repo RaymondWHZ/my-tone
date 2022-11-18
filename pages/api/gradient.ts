@@ -54,17 +54,17 @@ export default async function handler(
 
   res.status(200).json({data: {
     color_points: [
-      [c1_red, c1_green, c1_blue],
-      [c1_red + (c2_red - c1_red) * Math.pow(0.1, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.1, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.1, c_green)],
-      [c1_red + (c2_red - c1_red) * Math.pow(0.2, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.2, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.2, c_green)],
-      [c1_red + (c2_red - c1_red) * Math.pow(0.3, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.3, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.3, c_green)],
-      [c1_red + (c2_red - c1_red) * Math.pow(0.4, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.4, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.4, c_green)],
-      [c1_red + (c2_red - c1_red) * Math.pow(0.5, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.5, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.5, c_green)],
-      [c1_red + (c2_red - c1_red) * Math.pow(0.6, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.6, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.6, c_green)],
-      [c1_red + (c2_red - c1_red) * Math.pow(0.7, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.7, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.7, c_green)],
-      [c1_red + (c2_red - c1_red) * Math.pow(0.8, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.8, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.8, c_green)],
-      [c1_red + (c2_red - c1_red) * Math.pow(0.9, c_red), c1_blue + (c2_blue - c1_blue) * Math.pow(0.9, c_blue), c1_green + (c2_green - c1_green) * Math.pow(0.9, c_green)],
-      [c2_red, c2_green, c2_blue]
+      [Math.round(c1_red), Math.round(c1_green), Math.round(c1_blue)],
+      [Math.round(c1_red + (c2_red - c1_red) * Math.pow(0.1, c_red)), Math.round(c1_blue + (c2_blue - c1_blue) * Math.pow(0.1, c_blue)), Math.round(c1_green + (c2_green - c1_green) * Math.pow(0.1, c_green))],
+      [Math.round(c1_red + (c2_red - c1_red) * Math.pow(0.2, c_red)), Math.round(c1_blue + (c2_blue - c1_blue) * Math.pow(0.2, c_blue)), Math.round(c1_green + (c2_green - c1_green) * Math.pow(0.2, c_green))],
+      [Math.round(c1_red + (c2_red - c1_red) * Math.pow(0.3, c_red)), Math.round(c1_blue + (c2_blue - c1_blue) * Math.pow(0.3, c_blue)), Math.round(c1_green + (c2_green - c1_green) * Math.pow(0.3, c_green))],
+      [Math.round(c1_red + (c2_red - c1_red) * Math.pow(0.4, c_red)), Math.round(c1_blue + (c2_blue - c1_blue) * Math.pow(0.4, c_blue)), Math.round(c1_green + (c2_green - c1_green) * Math.pow(0.4, c_green))],
+      [Math.round(c1_red + (c2_red - c1_red) * Math.pow(0.5, c_red)), Math.round(c1_blue + (c2_blue - c1_blue) * Math.pow(0.5, c_blue)), Math.round(c1_green + (c2_green - c1_green) * Math.pow(0.5, c_green))],
+      [Math.round(c1_red + (c2_red - c1_red) * Math.pow(0.6, c_red)), Math.round(c1_blue + (c2_blue - c1_blue) * Math.pow(0.6, c_blue)), Math.round(c1_green + (c2_green - c1_green) * Math.pow(0.6, c_green))],
+      [Math.round(c1_red + (c2_red - c1_red) * Math.pow(0.7, c_red)), Math.round(c1_blue + (c2_blue - c1_blue) * Math.pow(0.7, c_blue)), Math.round(c1_green + (c2_green - c1_green) * Math.pow(0.7, c_green))],
+      [Math.round(c1_red + (c2_red - c1_red) * Math.pow(0.8, c_red)), Math.round(c1_blue + (c2_blue - c1_blue) * Math.pow(0.8, c_blue)), Math.round(c1_green + (c2_green - c1_green) * Math.pow(0.8, c_green))],
+      [Math.round(c1_red + (c2_red - c1_red) * Math.pow(0.9, c_red)), Math.round(c1_blue + (c2_blue - c1_blue) * Math.pow(0.9, c_blue)), Math.round(c1_green + (c2_green - c1_green) * Math.pow(0.9, c_green))],
+      [Math.round(c2_red), Math.round(c2_green), Math.round(c2_blue)]
     ],
     c: [c_red, c_green, c_blue],
     description: "Sample"
