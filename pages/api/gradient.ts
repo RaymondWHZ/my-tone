@@ -15,7 +15,9 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
 ) {
-  var featuresInfo = await getFeaturesInfo('71uF3xQj2v6DTZyCRIvZHv');
+
+  const playlist = req.query.playlist;
+  var featuresInfo = await getFeaturesInfo(playlist);
   console.log(featuresInfo)
   // red
   var energy = featuresInfo['energy'];
@@ -67,4 +69,6 @@ export default async function handler(
     c: [c_red, c_green, c_blue],
     description: "Sample"
   }})
+  await sleep(2000)
+  res.status(200).json({ data: { color: playlist } })
 }
