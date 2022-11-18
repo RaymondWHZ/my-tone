@@ -5,7 +5,6 @@ var scopes = ['playlist-read-private'],
   clientId = '4a13ead1dc754e9ea3f61616b009cc8a',
   state = 'some-state';
 
-// Setting credentials can be done in the wrapper's constructor, or using the API object's setters.
 var spotifyApi = new SpotifyWebApi({
   redirectUri: redirectUri,
   clientId: clientId,
@@ -13,7 +12,6 @@ var spotifyApi = new SpotifyWebApi({
 });
 
 
-// Create the authorization URL
 var authorizeURL = spotifyApi.createAuthorizeURL(scopes, state);
 console.log(authorizeURL);
 
@@ -25,7 +23,6 @@ spotifyApi.authorizationCodeGrant(code).then(
       console.log('The access token is ' + data.body['access_token']);
       console.log('The refresh token is ' + data.body['refresh_token']);
   
-      // Set the access token on the API object to use it in later calls
       spotifyApi.setAccessToken(data.body['access_token']);
       spotifyApi.setRefreshToken(data.body['refresh_token']);
     },

@@ -35,10 +35,16 @@ const normalize = (arr: number[], min: number, max: number) => {
 export const getFeaturesInfo = async (playlist: string): Promise<any> => {
   const SpotifyWebApi = require('../node_modules/spotify-web-api-node');
 
+  var cId: string = process.env.SPOTIFY_CLIENT_ID;
+  var cSec: string = process.env.SPOTIFY_CLIENT_SECRET;
+  var refTok: string = process.env.SPOTIFY_REFRESH_TOKEN;
+
+  console.log(cId+ ' ***\n' + cSec + '***\n'+ refTok);
+
   const spotifyApi = new SpotifyWebApi({
-    clientId : '4a13ead1dc754e9ea3f61616b009cc8a',
-    clientSecret: 'c199f4ce1f3440fba48363e073d628c6',
-    refreshToken: 'AQATAfzsStaw869U-Fs-bEXd16zNpKFSiX0NbcJyg0JZj9RE0sqMW5wpGilWdG57HL95tk5BCyZPGLlGDHIQc2idLyaHqESZC-_HvRkW_UVP_9mJH_XldcwBe-b-c60NH4k'
+    clientId : cId,
+    clientSecret: cSec,
+    refreshToken: refTok
   });
 
   const refreshTokenResponse = await spotifyApi.refreshAccessToken()
@@ -49,8 +55,8 @@ export const getFeaturesInfo = async (playlist: string): Promise<any> => {
   var tracks: string[] = [];
   var features=['danceability','energy','key','loudness','speechiness','acousticness','instrumentalness',
                   'liveness','valence','tempo','time_signature','mode'];
-  var featureValues = {};
-  var featuresInfo = {};
+  var featureValues: { [key: string]: any } = {};
+  var featuresInfo: { [key: string]: any } = {};
 
   const data = await spotifyApi.getPlaylistTracks(playlist, {
       offset: 1,
@@ -58,7 +64,7 @@ export const getFeaturesInfo = async (playlist: string): Promise<any> => {
       fields: 'items'
   })
 
-  var items = data.body.items;
+  var items: any[] = data.body.items;
   //console.log('Items : ', items);
   items.forEach(element => {
     //console.log('TrackId : ', element.track.id);
@@ -68,7 +74,7 @@ export const getFeaturesInfo = async (playlist: string): Promise<any> => {
 
   const featureData = await spotifyApi.getAudioFeaturesForTracks(tracks)
   //console.log('data : ', data.body);
-  var audioFeatures=featureData.body.audio_features;
+  var audioFeatures: any[] =featureData.body.audio_features;
   audioFeatures.forEach(element => {
       features.forEach(feature => {
           //console.log('feature name :',element[feature]);
