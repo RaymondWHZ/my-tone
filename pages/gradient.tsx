@@ -52,11 +52,11 @@ const generateDescriptions = (color1: Color, color2: Color) => {
       uniform: "Songs in your playlist are similar in acousticness, instrumentalness, amount of vocals, and danceability."
     },
     blue: {
-      high: "Songs on your playlist have standard tempos, time signatures, and keys. ",
-      medium: "Some songs on your playlist have standard tempos, time signatures, and keys. ",
-      low: "Most songs on your playlist have tempos, time signatures, and keys that are uncommon. ",
-      varied: "There is high variation in time signatures and keys between songs.",
-      uniform: "There is little variation in time signatures and keys between songs."
+      high: "The songs in your playlist have high tempos, time signatures, and keys.",
+      medium: "Some songs on your playlist have relatively average tempos, time signatures, and keys. ",
+      low: "The songs in your playlists have a lower tempo, time signature and key. ",
+      varied: "The tempos, time signature, and keys are highly varied between songs in your playlist.",
+      uniform: "The tempos, time signatures, and keys of the songs in your playlist are relatively similar and consistent throughout."
     }
   };
 
