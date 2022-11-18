@@ -1,4 +1,15 @@
-import {Box, Button, Flex, Image, Spacer, Text} from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  Drawer, DrawerBody,
+  DrawerContent,
+  DrawerHeader,
+  DrawerOverlay,
+  Flex,
+  Image,
+  Spacer,
+  Text, useDisclosure
+} from "@chakra-ui/react";
 import React from "react";
 import {useRouter} from "next/router";
 import {WhiteCard} from "./cards";
@@ -17,6 +28,7 @@ interface DescriptionsProps {
 
 export const Descriptions: React.FC<DescriptionsProps> = ({ descriptions, onClickSeeSimilar }) => {
   const router = useRouter()
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
       <Flex h="100vh" flexDirection="column">
@@ -34,7 +46,7 @@ export const Descriptions: React.FC<DescriptionsProps> = ({ descriptions, onClic
         </Flex>
         <Spacer/>
         <Flex flexDirection="row" justifyContent="center" mb="20px" >
-          <Button colorScheme='white' variant='ghost'>
+          <Button colorScheme='white' variant='ghost' onClick={onOpen}>
             <Image
               boxSize='2.5em'
               objectFit='cover'
@@ -76,7 +88,7 @@ export const Descriptions: React.FC<DescriptionsProps> = ({ descriptions, onClic
         }
       </Box>
       <Flex flexDirection="row" justifyContent="center" mb="20px" >
-        <Button colorScheme='white' variant='ghost'>
+        <Button colorScheme='white' variant='ghost' onClick={onOpen}>
           <Image
             boxSize='2.5em'
             objectFit='cover'
@@ -96,6 +108,19 @@ export const Descriptions: React.FC<DescriptionsProps> = ({ descriptions, onClic
         <Spacer/>
         <Box boxSize='2.5em' />
       </Flex>
+      <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
+        <DrawerOverlay />
+        <DrawerContent>
+          <DrawerHeader borderBottomWidth='1px'>Share your gradient</DrawerHeader>
+          <DrawerBody pt="20px" pb="80px">
+            <Flex flexDirection="row">
+              <Box bg="black">
+                <Image src="/file_download.svg" />
+              </Box>
+            </Flex>
+          </DrawerBody>
+        </DrawerContent>
+      </Drawer>
     </>
   )
 }
