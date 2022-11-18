@@ -99,11 +99,13 @@ const getSampleDescriptions = () => {
 const useGradientAndDescription = (playlist: string) => {
   const [response, setResponse] = useState<any>(undefined);
   useEffect(() => {  // executes once on page load
-    fetch("/api/gradient?playlist=" + playlist)
-      .then(async res => {
-        setResponse(await res.json())
-      })
-  }, [])
+    if (playlist) {
+      fetch("/api/gradient?playlist=" + playlist)
+        .then(async res => {
+          setResponse(await res.json())
+        })
+    }
+  }, [playlist])
 
   const descriptions: DisplayDescription | undefined = useMemo(() => {
     return getSampleDescriptions()
@@ -112,15 +114,27 @@ const useGradientAndDescription = (playlist: string) => {
   return {
     loading: !response,
     error: response?.error,
-    gradient: response?.gradient,
+    colorPoints: response?.data.color_points,
     descriptions
   }
+}
+
+const GradientBackground: React.FC<{ colorPoints: number[][] }> = ({ colorPoints }) => {
+  const linearColor = `linear-gradient(to bottom, ${colorPoints.map(p => `rgb(${p[0]}, ${p[1]}, ${p[2]})`).join(", ")})`
+  console.log(linearColor)
+  return (
+    <Box
+      className={styles.gradient}
+      style={{background: linearColor}}
+    />
+  )
 }
 
 export default function Gradient() {
   const router = useRouter()
   const { playlist } = router.query
-  const { loading, error, descriptions } = useGradientAndDescription(playlist as string)
+  console.log(router.query)
+  const { loading, error, colorPoints, descriptions } = useGradientAndDescription(playlist as string)
   const [similarSongs, setSimilarSongs] = useState<string | undefined>(undefined);
 
   if (loading) {  // loading
@@ -139,7 +153,7 @@ export default function Gradient() {
 
   return (
     <>
-      <Box className={styles.gradient} />
+      <GradientBackground colorPoints={colorPoints} />
       <Box className={styles.description_container}>
         {!similarSongs ?
           <Descriptions descriptions={descriptions ?? {}} onClickSeeSimilar={setSimilarSongs} /> :
