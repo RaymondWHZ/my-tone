@@ -5,6 +5,7 @@ import {useRouter} from "next/router";
 import {Descriptions, DisplayDescription} from "../components/descriptions";
 import {SimilarSongs} from "../components/similar-songs";
 import {Loading} from "../components/loading";
+import {GradientCanvas} from "../components/gradientCanvas"
 
 interface Color {
   [key: string]: number
@@ -152,7 +153,8 @@ export default function Gradient() {
 
   return (
     <>
-      <GradientBackground colorPoints={colorPoints} />
+      {/* <GradientBackground colorPoints={colorPoints} /> */}
+      <GradientCanvas colorPoints={colorPoints}/>
       <Box className={styles.description_container}>
         {!similarSongs ?
           <Descriptions descriptions={descriptions ?? {}} onClickSeeSimilar={setSimilarSongs} /> :
