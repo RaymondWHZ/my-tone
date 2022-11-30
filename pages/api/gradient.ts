@@ -34,17 +34,22 @@ export default async function handler(
   const key = featuresInfo['key']
 
   // red dominated by energy
-  const r1 = 256 * (0.5 * energy[0] + 0.5 * tempo[2])
-  const r2 = 256 * (0.5 * energy[0] + 0.5 * tempo[0])
-  const r3 = 256 * (0.5 * energy[0] + 0.5 * tempo[1])
+  var enercy_c = energy[0]
+  enercy_c = Math.max(1, enercy_c * 1.3)
+  const r1 = 256 * (0.5 * enercy_c + 0.5 * tempo[2])
+  const r2 = 256 * (0.5 * enercy_c + 0.5 * tempo[0])
+  const r3 = 256 * (0.5 * enercy_c + 0.5 * tempo[1])
 
   // green dominated by danceability
+  var danceability_c = danceability[0]
+  danceability_c = Math.max(1, danceability_c * 1.3)
   const g1 = 256 * (0.5 * danceability[0] + 0.5 * acousticness[2])
   const g2 = 256 * (0.5 * danceability[0] + 0.5 * acousticness[0])
   const g3 = 256 * (0.5 * danceability[0] + 0.5 * acousticness[1])
 
   //blue dominated by reverse valence
-  const reverse_valence = 1.0 - valence[0]
+  var reverse_valence = 1.0 - valence[0]
+  reverse_valence = Math.max(1, reverse_valence * 1.3)
 
   const b1 = 256 * (0.5 * reverse_valence + 0.5 * (1-mode[2]))
   const b2 = 256 * (0.5 * reverse_valence + 0.5 * (0.5 * (2-mode[2]-mode[1])))
