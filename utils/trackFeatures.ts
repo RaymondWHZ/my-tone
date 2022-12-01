@@ -61,7 +61,7 @@ export const getFeaturesInfo = async (playlist: string): Promise<any> => {
 
   const data = await spotifyApi.getPlaylistTracks(playlist, {
       offset: 1,
-      limit: 5,
+      limit: 100,
       fields: 'items'
   })
 
