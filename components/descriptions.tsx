@@ -90,6 +90,8 @@ export const Descriptions: React.FC<DescriptionsProps> = ({ descriptions, onClic
             mb="10px"
             bg="black"
             color="white"
+            marginTop="1.5em"
+            marginBottom="1.5em"
             onClick={() => onClickSeeSimilar && onClickSeeSimilar("true")}
           >
             See Similar
