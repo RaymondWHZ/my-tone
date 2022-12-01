@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button, Flex, Image, Spacer, Text} from "@chakra-ui/react";
+import {Button, Flex, Image, Spacer, Text, Box} from "@chakra-ui/react";
 import { WhiteCard } from "./cards";
 import {useRouter} from "next/router";
 import {Song} from "../types/types";
@@ -44,18 +44,19 @@ export const SimilarSongs: React.FC<SimilarSongsProps> = ({ onClickReturn }) => 
         </Button>
         <Spacer/>
       </Flex>
-      {!songs && <Text>loading...</Text>}
+      {!songs && <Text alignContent="center">loading...</Text>}
       {songs && songs.map((song: Song) => (
         <Flex background="rgba(255, 255, 255, 0.0)" flexDirection='row' mb="20px" mt="40px">
           <Image
-            boxSize='10em'
+            boxSize='3em'
             objectFit='cover'
             src={song.image}
-            borderRadius="20px"
+            borderRadius="15px"
           />
-          <WhiteCard width='prose' alignContent="left" justifyContent="center" ml="20px">
-            <Text fontWeight="bold" mb="10px" color="black">{song.name}</Text>
-          </WhiteCard>
+          <Box ml='3' flexDirection="column">
+            <Text fontSize='md'> {song.name} </Text>
+            <Text fontSize='sm'> {song.artist} </Text>
+          </Box>
         </Flex>
       ))}
     </>

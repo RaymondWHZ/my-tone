@@ -18,4 +18,5 @@ export interface ColorDescriptionDict {
 export interface Song {
   name: string
   image: string
+  artist: string
 }

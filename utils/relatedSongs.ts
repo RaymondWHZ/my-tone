@@ -37,9 +37,11 @@ export const getRelatedSongs = async (playlist: string): Promise<Song[]> => {
         //console.log(tracks[element]);
         let trackName: string = tracks[element].name;
         let trackImgs: any[] = tracks[element].album.images;
+        let artistName: string = tracks[element].album.artists[0].name;
         recommended_tracks.push({
             name: trackName,
-            image: trackImgs[2].url
+            image: trackImgs[2].url,
+            artist: artistName
         })
     }
     return recommended_tracks;
