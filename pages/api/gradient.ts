@@ -7,6 +7,23 @@ type Data = {
   error?: any  // put error in the response if there is any
 }
 
+// Description types
+interface Color {
+  [key: string]: number
+}
+
+interface ColorDescription {
+  high: string
+  medium: string
+  low: string
+  varied: string
+  uniform: string
+}
+
+interface ColorDescriptionDict {
+  [key: string]: ColorDescription
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Data>
@@ -14,7 +31,7 @@ export default async function handler(
 
   const playlist = req.query.playlist as string;
   const featuresInfo = await getFeaturesInfo(playlist);
-  console.log(featuresInfo)
+  // console.log(featuresInfo)
 
   const energy = featuresInfo['energy'];
   const valence = featuresInfo['valence']
@@ -64,6 +81,77 @@ export default async function handler(
   let blue2 = b2
   let blue3 = b3
 
+  // Descriptions
+  const colorDescriptionTemplates: ColorDescriptionDict = {
+    red: {
+      high: "Your playlist has many energetic and high tempo songs. The overall vibe is lively and fast paced. ",
+      medium: "Your playlist has some energetic, high tempo songs. Your playlist is moderately energetic overall. ",
+      low: "Your playlist has few songs that are fast paced and high in energy. The overall playlist may have a more relaxed vibe and a slower tempo. ",
+      varied: "Individual songs in your playlist vary widely in their energy and tempo.",
+      uniform: "Songs in your playlist have comparable energy and tempo."
+    },
+    green: {
+      high: "Your playlist is high in danceability overall. It would make a great playlist for a party! ",
+      medium: "Your playlist has moderate danceability. " ,
+      low: "Your playlist has low danceability. ",
+      varied: "Songs in your playlist vary in the characteristic of danceability.",
+      uniform: "Songs in your playlist are fairly similar in danceability."
+    },
+    blue: {
+      high: "Many songs in your playlist have low valance (more blue). Your playlist may have an overall mood that is sad and melancholic. ",
+      medium: "Songs in your playlist are balanced in their valence. The overall playlist is neither too cheerful nor too sad. ",
+      low: "Songs in your playlist have a high valence (less blue) and convey cheerful, happy emotions. ",
+      varied: "The mood of songs in your playlist vary. Some songs are cheerful while others are blue.",
+      uniform: "The mood of songs in your playlist are fairly similar."
+    }
+  };
+
+  // Thresholds (adjust)
+  const highThreshold = 180;
+  const mediumThreshold = 130;
+  const variedThreshold = 60;
+
+  var color1: Color = {
+    red: red1,
+    green: green1,
+    blue: blue1
+  }
+
+  var color2: Color = {
+    red: red3,
+    green: green3,
+    blue: blue3
+  }
+
+  console.log("Colors:")
+  console.log(color1);
+  console.log(color2);
+
+  const descriptions: any = {};
+  Object.keys(colorDescriptionTemplates).forEach(c => {
+    let quant: string = "";
+    let desc: string = "";
+    if ((color1[c] + color2[c]) / 2.0 > highThreshold) {
+      quant += "High and ";
+      desc += colorDescriptionTemplates[c].high;
+    } else if ((color1[c] + color2[c]) / 2.0 > mediumThreshold) {
+      quant += "Medium and ";
+      desc += colorDescriptionTemplates[c].medium;
+    } else {
+      quant += "Low and ";
+      desc += colorDescriptionTemplates[c].low;
+    }
+
+    if (Math.abs(color1[c] - color2[c]) > variedThreshold) {
+      quant += "Varied";
+      desc += colorDescriptionTemplates[c].varied;
+    } else {
+      quant += "Uniform";
+      desc += colorDescriptionTemplates[c].uniform;
+    }
+    descriptions[c] = {quantifier:  quant, description: desc};
+  });
+
   res.status(200).json({data: {
     color_points: [
       [Math.round(red1), Math.round(green1), Math.round(blue1)],
@@ -74,6 +162,6 @@ export default async function handler(
       [Math.round(red3), Math.round(green3), Math.round(blue3)]
     ],
     c: [1, 1, 1],
-    description: "Sample"
+    description: descriptions
   }})
 }
