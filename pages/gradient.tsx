@@ -1,8 +1,8 @@
 import {Box} from "@chakra-ui/react";
 import styles from "../styles/Home.module.css";
-import React, {useEffect, useMemo, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useRouter} from "next/router";
-import {Descriptions, DisplayDescription} from "../components/descriptions";
+import {Descriptions} from "../components/descriptions";
 import {SimilarSongs} from "../components/similar-songs";
 import {Loading} from "../components/loading";
 import {GradientCanvas} from "../components/gradientCanvas"
@@ -18,13 +18,6 @@ const useGradientAndDescription = (playlist: string | undefined) => {
         })
     }
   }, [playlist])
-
-  // const descriptions: DisplayDescription | undefined = useMemo(() => {
-  //   return getSampleDescriptions()
-  // }, [response])
-
-  console.log("Descriptions from api:");
-  console.log(response?.data.description);
 
   return {
     loading: !response,
@@ -55,7 +48,6 @@ export default function Gradient() {
 
   return (
     <>
-      {/* <GradientBackground colorPoints={colorPoints} /> */}
       <GradientCanvas colorPoints={colorPoints} saveCanvas={saveCanvas}/>
       <Box className={styles.description_container}>
         {!similarSongs ?

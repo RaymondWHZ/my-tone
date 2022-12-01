@@ -35,66 +35,73 @@ interface DescriptionsProps {
   onClickSave?: () => void
 }
 
+const EntryScreen: React.FC<{ onShare?: () => void }> = ({ onShare }) => {
+  const router = useRouter()
+  return (
+    <Flex h="100vh" flexDirection="column">
+      <Flex flexDirection="row" mt="20px">
+        <Button colorScheme='white' variant='ghost'>
+          <Image
+            boxSize='2.5em'
+            objectFit='cover'
+            src='/down_chevron_icon.svg'
+            transform='rotate(270deg)'
+            onClick={() => router.push("/")}
+          />
+        </Button>
+        <Spacer/>
+      </Flex>
+      <Spacer/>
+      <Flex flexDirection="row" justifyContent="center" mb="20px" >
+        <Button colorScheme='white' variant='ghost' onClick={onShare}>
+          <Image
+            boxSize='2.5em'
+            objectFit='cover'
+            src='/share_icon.svg'
+          />
+        </Button>
+        <Spacer/>
+        <Button colorScheme='white' variant='ghost'>
+          <Image
+            boxSize='2.5em'
+            objectFit='cover'
+            src='/down_chevron_icon.svg'
+          />
+        </Button>
+        <Spacer/>
+        <Button variant='ghost'>
+          <Box boxSize='2.5em' />
+        </Button>
+      </Flex>
+    </Flex>
+  )
+}
+
 export const Descriptions: React.FC<DescriptionsProps> = ({ descriptions, onClickSeeSimilar, onClickSave }) => {
   const router = useRouter()
   const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <>
-      <Flex h="100vh" flexDirection="column">
-        <Flex flexDirection="row" mt="20px">
-          <Button colorScheme='white' variant='ghost'>
-            <Image
-              boxSize='2.5em'
-              objectFit='cover'
-              src='/down_chevron_icon.svg'
-              transform='rotate(270deg)'
-              onClick={() => router.push("/")}
-            />
-          </Button>
-          <Spacer/>
-        </Flex>
-        <Spacer/>
-        <Flex flexDirection="row" justifyContent="center" mb="20px" >
-          <Button colorScheme='white' variant='ghost' onClick={onOpen}>
-            <Image
-              boxSize='2.5em'
-              objectFit='cover'
-              src='/share_icon.svg'
-            />
-          </Button>
-          <Spacer/>
-          <Button colorScheme='white' variant='ghost'>
-            <Image
-              boxSize='2.5em'
-              objectFit='cover'
-              src='/down_chevron_icon.svg'
-            />
-          </Button>
-          <Spacer/>
-          <Box boxSize='2.5em' />
-        </Flex>
-      </Flex>
-      <Box background="rgba(255, 255, 255, 0.0)">
+      <EntryScreen onShare={onOpen}/>
+      <Box background="rgba(255, 255, 255, 0.0)" mt="40px" mb="80px">
         {descriptions &&
           Object.keys(descriptions).map(c => {
             return (
               <WhiteCard key={c} w="100%" mb="20px" background="rgba(255, 255, 255, 1.0)">
                 <Text fontWeight="bold" mb="10px" color={c}>{c.toUpperCase() + ": " + descriptions[c].quantifier}</Text>
-                <Text color="black" mb="20px">{descriptions[c].description}</Text>
+                <Text color="black" mb="8px">{descriptions[c].description}</Text>
               </WhiteCard>)
           })
         }
         <Flex flexDirection="row" justifyContent='center'>
           <Button
             size="sm"
-            mb="10px"
             bg="black"
             color="white"
-            marginTop="1.5em"
-            marginBottom="1.5em"
+            mt="10px"
             onClick={() => onClickSeeSimilar && onClickSeeSimilar("true")}
           >
-            See Similar
+            See Similar Songs
           </Button>
         </Flex>
       </Box>
@@ -110,14 +117,15 @@ export const Descriptions: React.FC<DescriptionsProps> = ({ descriptions, onClic
         <Button colorScheme='white' variant='ghost'>
           <Image
             width='2.5em'
-            height='2.5em'
             objectFit='cover'
             src='/refresh_iconsvg.svg'
             onClick={() => router.push("/")}
           />
         </Button>
         <Spacer/>
-        <Box boxSize='2.5em' />
+        <Button variant='ghost'>
+          <Box boxSize='2.5em' />
+        </Button>
       </Flex>
       <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
         <DrawerOverlay />
