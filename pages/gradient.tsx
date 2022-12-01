@@ -7,22 +7,7 @@ import {SimilarSongs} from "../components/similar-songs";
 import {Loading} from "../components/loading";
 import {GradientCanvas} from "../components/gradientCanvas"
 import {Error} from "../components/error";
-
-interface Color {
-  [key: string]: number
-}
-
-interface ColorDescription {
-  high: string
-  medium: string
-  low: string
-  varied: string
-  uniform: string
-}
-
-interface ColorDescriptionDict {
-  [key: string]: ColorDescription
-}
+import {Color, ColorDescriptionDict} from "../types/types";
 
 // Generate descriptions of the generated colors
 const generateDescriptions = (color1: Color, color2: Color) => {

@@ -1,9 +1,8 @@
 import SpotifyWebApi from "spotify-web-api-node";
 import { getFeaturesInfo } from './trackFeatures';
+import {Song} from "../types/types";
 
-const playlist = '37i9dQZF1EIZCsyhLFyG4d';
-
-export const getRelatedSongs = async (playlist: string): Promise<any> => {
+export const getRelatedSongs = async (playlist: string): Promise<Song[]> => {
     const featuresInfo = await getFeaturesInfo(playlist)
     const options: { [key: string]: any } = {};
     for (const [key, value] of Object.entries(featuresInfo)) {
@@ -29,7 +28,7 @@ export const getRelatedSongs = async (playlist: string): Promise<any> => {
     const refreshTokenResponse = await spotifyApi.refreshAccessToken()    
     console.log('The access token has been refreshed');
     spotifyApi.setAccessToken(refreshTokenResponse.body['access_token']);
-    let recommended_tracks: string[][] = [];
+    let recommended_tracks: Song[] = [];
     const data = await spotifyApi.getRecommendations(options)
     //console.log(data.body);
     const tracks = data.body.tracks;
@@ -38,9 +37,10 @@ export const getRelatedSongs = async (playlist: string): Promise<any> => {
         //console.log(tracks[element]);
         let trackName: string = tracks[element].name;
         let trackImgs: any[] = tracks[element].album.images;
-        recommended_tracks.push([trackName, trackImgs[2].url]);
+        recommended_tracks.push({
+            name: trackName,
+            image: trackImgs[2].url
+        })
     }
-    console.log(recommended_tracks);                
+    return recommended_tracks;
 }
-
-//getRelatedSongs(playlist);

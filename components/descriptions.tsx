@@ -1,6 +1,6 @@
 import {
   Box,
-  Button,
+  Button, Center,
   Drawer, DrawerBody,
   DrawerContent,
   DrawerHeader,
@@ -13,6 +13,14 @@ import {
 import React from "react";
 import {useRouter} from "next/router";
 import {WhiteCard} from "./cards";
+import {
+  FacebookIcon,
+  FacebookShareButton,
+  RedditIcon,
+  RedditShareButton,
+  TwitterIcon,
+  TwitterShareButton
+} from "react-share";
 
 export interface DisplayDescription {
   [key: string]: {
@@ -73,20 +81,20 @@ export const Descriptions: React.FC<DescriptionsProps> = ({ descriptions, onClic
               <WhiteCard key={c} w="100%" mb="20px" background="rgba(255, 255, 255, 1.0)">
                 <Text fontWeight="bold" mb="10px" color={c}>{c.toUpperCase() + ": " + descriptions[c].quantifier}</Text>
                 <Text color="black" mb="20px">{descriptions[c].description}</Text>
-                <Flex flexDirection="row" justifyContent='center'>
-                  <Button
-                    size="sm"
-                    mb="10px"
-                    bg="black"
-                    color="white"
-                    onClick={() => onClickSeeSimilar && onClickSeeSimilar(c)}
-                  >
-                    See Similar
-                  </Button>
-                </Flex>
               </WhiteCard>)
           })
         }
+        <Flex flexDirection="row" justifyContent='center'>
+          <Button
+            size="sm"
+            mb="10px"
+            bg="black"
+            color="white"
+            onClick={() => onClickSeeSimilar && onClickSeeSimilar("true")}
+          >
+            See Similar
+          </Button>
+        </Flex>
       </Box>
       <Flex flexDirection="row" justifyContent="center" mb="20px" >
         <Button colorScheme='white' variant='ghost' onClick={onOpen}>
@@ -115,9 +123,32 @@ export const Descriptions: React.FC<DescriptionsProps> = ({ descriptions, onClic
           <DrawerHeader borderBottomWidth='1px'>Share your gradient</DrawerHeader>
           <DrawerBody pt="20px" pb="80px">
             <Flex flexDirection="row">
-              <Box bg="black">
+              <Center bg="black" mr="20px">
                 <Image src="/file_download.svg" onClick={onClickSave} />
-              </Box>
+              </Center>
+              <Center mr="20px">
+                <FacebookShareButton
+                  url={"https://mytone.cc/gradient?playlist=2n4aN8bbWVPiMA2MPMOW1t"}
+                >
+                  <FacebookIcon size={32} round />
+                </FacebookShareButton>
+              </Center>
+              <Center mr="20px">
+                <TwitterShareButton
+                  url={window.location.href}
+                  title={"Check out my gradient!"}
+                >
+                  <TwitterIcon size={32} round />
+                </TwitterShareButton>
+              </Center>
+              <Center mr="20px">
+                <RedditShareButton
+                  url={window.location.href}
+                  title={"Check out my gradient!"}
+                >
+                  <RedditIcon size={32} round />
+                </RedditShareButton>
+              </Center>
             </Flex>
           </DrawerBody>
         </DrawerContent>
