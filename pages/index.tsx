@@ -1,9 +1,27 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
-import {Box, Button, Center, Flex, Heading, Input, InputGroup, InputLeftElement, Text} from "@chakra-ui/react";
+import {
+  Accordion,
+  AccordionButton,
+  AccordionIcon,
+  AccordionItem,
+  AccordionPanel,
+  Box,
+  Button,
+  Center,
+  Flex,
+  Heading,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader,
+  ModalOverlay,
+  Text, useDisclosure
+} from "@chakra-ui/react";
 import React, {useMemo, useState} from "react";
 import {useRouter} from "next/router";
 import {AlphaCard} from "../components/cards";
+import Image from "next/image";
 
 export default function Home() {
   const router = useRouter();
@@ -17,6 +35,7 @@ export default function Home() {
       return url.substring(start, end)
     }
   }, [url])
+  const { isOpen, onOpen, onClose } = useDisclosure()
   return (
     <Box className={styles.container}>
       <Head>
@@ -36,7 +55,7 @@ export default function Home() {
                 <Button bg="black" color="white" fontSize="14px">Open Spotify</Button>
               </a>
               <Box flex={1}/>
-              <Button size="sm" color="white" variant="link" textDecoration="underline" fontWeight="bold">How to get link</Button>
+              <Button size="sm" color="white" variant="link" textDecoration="underline" fontWeight="bold" onClick={onOpen}>How to get link</Button>
             </Flex>
             <Text color="white">Be sure that your Spotify playlist is public!</Text>
           </AlphaCard>
@@ -53,6 +72,38 @@ export default function Home() {
           </AlphaCard>
         </Box>
       </Center>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>How to get playlist link</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Accordion defaultIndex={0}>
+              {["/Inst_1.jpg", "/Inst_2.jpg", "/Inst_3.jpg"].map((src, index) => (
+                <AccordionItem>
+                  <h2>
+                    <AccordionButton>
+                      <Box flex='1' textAlign='left'>
+                        Step {index + 1}
+                      </Box>
+                      <AccordionIcon />
+                    </AccordionButton>
+                  </h2>
+                  <AccordionPanel pb={4}>
+                    <Image alt="" src={src} width={400} height={500} />
+                  </AccordionPanel>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </ModalBody>
+
+          <ModalFooter>
+            <Button onClick={onClose}>
+              Got it!
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
     </Box>
   )
 }
