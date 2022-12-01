@@ -35,11 +35,11 @@ const normalize = (arr: number[], min: number, max: number) => {
 }
 
 export const getFeaturesInfo = async (playlist: string): Promise<any> => {
-  let cId = process.env.SPOTIFY_CLIENT_ID as string;
-  let cSec = process.env.SPOTIFY_CLIENT_SECRET as string;
-  let refTok = process.env.SPOTIFY_REFRESH_TOKEN as string;
-
-  // console.log(cId+ ' ***\n' + cSec + '***\n'+ refTok);
+  let cId = process.env.SPOTIFY_CLIENT_ID as string; 
+  let cSec = process.env.SPOTIFY_CLIENT_SECRET as string; 
+  let refTok = process.env.SPOTIFY_REFRESH_TOKEN as string; 
+  
+  console.log(cId+ ' ***\n' + cSec + '***\n'+ refTok);
 
   const spotifyApi = new SpotifyWebApi({
     clientId : cId,
@@ -51,8 +51,9 @@ export const getFeaturesInfo = async (playlist: string): Promise<any> => {
   console.log('The access token has been refreshed ::: ' + refreshTokenResponse.body['access_token']);
   spotifyApi.setAccessToken(refreshTokenResponse.body['access_token']);
 
+  let tracks: string[] = [];
+  let artists: string[] = [];
 
-  const tracks: string[] = [];
   const features=['danceability','energy','key','loudness','speechiness','acousticness','instrumentalness',
                   'liveness','valence','tempo','time_signature','mode'];
   const featureValues: { [key: string]: any } = {};
@@ -60,7 +61,7 @@ export const getFeaturesInfo = async (playlist: string): Promise<any> => {
 
   const data = await spotifyApi.getPlaylistTracks(playlist, {
       offset: 1,
-      limit: 50,
+      limit: 5,
       fields: 'items'
   })
 
@@ -69,8 +70,13 @@ export const getFeaturesInfo = async (playlist: string): Promise<any> => {
   items.forEach(element => {
     //console.log('TrackId : ', element.track.id);
     tracks.push(element.track!.id);
+    let artistList: any[] = element.track!.artists!;
+    artists.push(artistList[0].id);
   });
-  console.log('The playlist contains these tracks', tracks);
+  //console.log('The playlist contains these tracks', tracks);
+  //console.log('The playlist containes these artists', artists);
+  featuresInfo["tracks"] = tracks.slice(0, 2);
+  featuresInfo["artists"] = artists.slice(0, 3);
 
   const featureData = await spotifyApi.getAudioFeaturesForTracks(tracks)
   //console.log('data : ', data.body);
