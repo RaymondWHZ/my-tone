@@ -61,13 +61,14 @@ const EntryScreen: React.FC<{ onShare?: () => void }> = ({ onShare }) => {
           />
         </Button>
         <Spacer/>
-        <Button colorScheme='white' variant='ghost'>
+        <Text color='white' variant='ghost'>
+          Learn more
           <Image
-            boxSize='2.5em'
-            objectFit='cover'
-            src='/down_chevron_icon.svg'
+            boxSize='40%'
+            ml='1.5em'
+            src='/down_chevron.svg'
           />
-        </Button>
+        </Text>
         <Spacer/>
         <Button variant='ghost'>
           <Box boxSize='2.5em' />
