@@ -62,7 +62,7 @@ const EntryScreen: React.FC<{ onShare?: () => void }> = ({ onShare }) => {
         </Button>
         <Spacer/>
         <Text color='white' variant='ghost'>
-          Learn more
+          Read more
           <Image
             boxSize='40%'
             ml='1.5em'
